@@ -1,0 +1,87 @@
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #FAFAFB;
+}
+
+.custom-navbar {
+    background-color: #ffffff;
+}
+
+.brand-name {
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.search-input {
+    border-color: #DDE2E4;
+    width: 1080px;
+}
+
+.search-icon {
+    background-color: #FFFFFF;
+    border-color: #DDE2E4;
+    color: #B0BABF;
+}
+
+.profile-picture {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.logo-icon {
+    width: 24px;
+    height: 24px;
+    background-color: #FF5555;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 8px;
+}
+
+header {
+    height: 83px;
+}
+
+.posts-container {
+    margin: 100px 200px 0 200px;
+    max-width: 1200px;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.add-button {
+    width: 162px;
+    height: 40px;
+    color: #FFFFFF;
+    background-color: #65558F;
+    border-radius: 100px;
+    border: none;
+    font-size: 14px;
+}
+
+h1 {
+    font-size: 36px;
+    font-weight: 700;
+    color: #333333;
+    display: inline-block;
+    margin-left: 250px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #FFFFFF;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.pagination .page-link {
+    color: #667085;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #6B46C1;
+    border-color: #6B46C1;
+    color: white;
+}

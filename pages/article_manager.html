@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý bài viết</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../css/article-manager.css">
+</head>
+
+<body>
+    <header class="navbar navbar-light custom-navbar">
+        <div class="container-fluid">
+            <div class="row w-100 align-items-center justify-content-between">
+                <div class="col-auto">
+                    <a class="navbar-brand d-flex align-items-center" href="#">
+                        <img src="../assets/icons/Logo.png" alt="">
+                        <span class="brand-name">RIKKEI_EDU_BLOG</span>
+                    </a>
+                </div>
+
+                <div class="col-auto">
+                    <div class="dropdown">
+                        <img src="profile.jpg" alt="Profile" width="40" height="40"
+                            class="rounded-circle profile-picture dropdown-toggle" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="#">View profile</a></li>
+                            <li><a class="dropdown-item" href="#">Update profile picture</a></li>
+                            <li><a class="dropdown-item" href="#">Change password</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#">Log out</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="posts-container">
+        <button type="button" class="add-button" data-bs-toggle="modal" data-bs-target="#addArticleModal">
+            Thêm mới bài viết
+        </button>
+        <h1>Quản lý bài viết</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Ảnh</th>
+                    <th scope="col">Tiêu đề</th>
+                    <th scope="col">Chủ đề</th>
+                    <th scope="col">Nội dung</th>
+                    <th scope="col">Trạng thái</th>
+                    <th scope="col">Chỉnh sửa trạng thái</th>
+                    <th scope="col">Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row"><img src="../assets/images/thumbnail1.jpg" alt="" width="100" height="70"></th>
+                    <td>Học nấu cá sốt cà chua</td>
+                    <td>Nấu ăn</td>
+                    <td>tôi đã học được cách nấu ăn...</td>
+                    <td class="status">Public</td>
+                    <td>
+                        <select class="form-select" aria-label="Default select example">
+                            <option value="1" selected>Public</option>
+                            <option value="2">Private</option>
+                        </select>
+                    </td>
+                    <td>
+                        <button class="btn btn-warning">Sửa</button>
+                        <button class="btn btn-danger">Xóa</button>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row"><img src="../assets/images/thumbnail2.jpg" alt="" width="100" height="70"></th>
+                    <td>Bí kíp viết CV ngành IT</td>
+                    <td>IT</td>
+                    <td>Chia sẻ cách viết CV ấn tượng...</td>
+                    <td class="status">Private</td>
+                    <td>
+                        <select class="form-select" aria-label="Default select example">
+                            <option value="1">Public</option>
+                            <option value="2" selected>Private</option>
+                        </select>
+                    </td>
+                    <td>
+                        <button class="btn btn-warning">Sửa</button>
+                        <button class="btn btn-danger">Xóa</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Add post Modal -->
+    <div class="modal fade" id="addArticleModal" tabindex="-1" aria-labelledby="addArticleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="addArticleModalLabel">📝 Add New Article</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="mb-3">
+                  <label for="title" class="form-label">Title</label>
+                  <input type="text" class="form-control custom-input" id="title" placeholder="Enter title">
+                </div>
+                <div class="mb-3">
+                  <label for="categories" class="form-label">Article Categories</label>
+                  <input type="text" class="form-control custom-input" id="categories" placeholder="Enter categories">
+                </div>
+                <div class="mb-3">
+                  <label for="mood" class="form-label">Mood</label>
+                  <div class="input-group">
+                    <span class="input-group-text bg-light border-0"><svg xmlns="[invalid url, do not cite] width="16" height="16" fill="currentColor" class="bi bi-emoji-smile" viewBox="0 0 16 16">
+                      <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                      <path d="M4.285 9.567a.5.5 0 0 1 .683.183A3.498 3.498 0 0 0 8 11.5a3.498 3.498 0 0 0 3.032-1.75.5.5 0 1 1 .866.5A4.498 4.498 0 0 1 8 12.5a4.498 4.498 0 0 1-3.898-2.25.5.5 0 0 1 .183-.683zM7 6.5C7 7.328 6.552 8 6 8s-1-.672-1-1.5S5.448 5 6 5s1 .672 1 1.5zm4 0c0 .828-.448 1.5-1 1.5s-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5z"/>
+                    </svg></span>
+                    <input type="text" class="form-control custom-input" id="mood" value="Happy" readonly>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label for="content" class="form-label">Content</label>
+                  <textarea class="form-control custom-input" id="content" rows="5"></textarea>
+                </div>
+                <div class="mb-3">
+                  <label>Status</label>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="status" id="public" value="public">
+                    <label class="form-check-label" for="public">public</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="status" id="private" value="private">
+                    <label class="form-check-label" for="private">private</label>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label for="fileUpload" class="form-label">File Upload</label>
+                  <div class="custom-file-upload">
+                    <svg xmlns="[invalid url, do not cite] width="16" height="16" fill="currentColor" class="bi bi-paperclip" viewBox="0 0 16 16">
+                      <path d="M4.5 3a2.5 2.5 0 0 1 5 0v9a1.5 1.5 0 0 1-3 0V5a.5.5 0 0 1 1 0v7a.5.5 0 0 0 1 0V3a1.5 1.5 0 1 0-3 0v9a2.5 2.5 0 0 0 5 0V5a.5.5 0 0 1 1 0v7a3.5 3.5 0 1 1-7 0V3z"/>
+                    </svg>
+                    <p>Browse and choose the files you want to upload from your computer</p>
+                    <input type="file" id="fileUpload" style="display: none;" multiple>
+                    <button type="button" class="btn btn-secondary mt-2" onclick="document.getElementById('fileUpload').click()">Browse</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-success">Add</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+</body>
+
+</html>

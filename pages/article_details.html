@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Social Media Post</title>
+    <style>
+        body {
+            background-color: white;
+            font-family: Arial, sans-serif;
+        }
+
+        .header {
+            padding: 10px;
+        }
+
+        .back-arrow {
+            font-size: 20px;
+            color: black;
+            text-decoration: none;
+        }
+
+        .main {
+            padding: 20px;
+        }
+
+        .post,
+        .comment {
+            background-color: #f0f0f0;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .post-header,
+        .comment-header {
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .profile-pic {
+            margin-right: 10px;
+        }
+
+        img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+
+        .post-body {
+            flex-grow: 1;
+        }
+
+        .title {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .content {
+            margin-bottom: 10px;
+        }
+
+        .metrics {
+            display: flex;
+            gap: 20px;
+        }
+
+        .comment-section .view-all {
+            display: block;
+            margin-bottom: 10px;
+            color: green;
+            text-decoration: none;
+        }
+
+        .comment .text {
+            flex-grow: 1;
+        }
+
+        .comment .metrics {
+            margin-top: 5px;
+        }
+
+        .icons {
+            width: 16px;
+            height: 16px;
+            vertical-align: middle;
+            border-radius: 0%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <a href="#" class="back-arrow">←</a>
+    </div>
+    <div class="main">
+        <div class="post">
+            <div class="post-header">
+                <div class="profile-pic">
+                    <img src="profile1.jpg" alt="Profile Picture">
+                </div>
+                <div class="post-body">
+                    <h2 class="title">A Productive Day at Work</h2>
+                    <p class="content">Today was a really productive day at work. I managed to finish a report ahead of
+                        schedule and received positive feedback from my manager. After work, I went for a walk in the
+                        park, enjoying the fresh air. Looking forward to another great day tomorrow!</p>
+                </div>
+            </div>
+            <div class="metrics">
+                <span class="like">15 Likes <img class="icons" src="../assets/icons/like.svg" alt=""></span>
+                <span class="reply">6 Replies <img class="icons" src="../assets/icons/comment.png" alt=""></span>
+            </div>
+        </div>
+        <div class="comment-section">
+            <a href="#" class="view-all">View all 12 comments</a>
+            <div class="comment">
+                <div class="comment-header">
+                    <div class="profile-pic">
+                        <img src="profile2.jpg" alt="Profile Picture">
+                    </div>
+                    <p class="text">very good!!</p>
+                </div>
+                <div class="metrics">
+                    <span class="like">15 Likes <img class="icons" src="../assets/icons/like.svg" alt=""></span>
+                    <span class="reply">6 Replies <img class="icons" src="../assets/icons/comment.png" alt=""></span>
+                </div>
+            </div>
+            <div class="comment">
+                <div class="comment-header">
+                    <div class="profile-pic">
+                        <img src="profile3.jpg" alt="Profile Picture">
+                    </div>
+                    <p class="text">hello rikkie!</p>
+                </div>
+                <div class="metrics">
+                    <span class="like">15 Likes <img class="icons" src="../assets/icons/like.svg" alt=""></span>
+                    <span class="reply">6 Replies <img class="icons" src="../assets/icons/comment.png" alt=""></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

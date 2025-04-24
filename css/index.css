@@ -1,9 +1,22 @@
-:root {
-    --purple: #6B46C1;
+@font-face {
+    font-family: 'Inter';
+    src: url(Inter-VariableFont_opsz,wght.ttf) format('truetype');
+    font-weight: 100 900;
 }
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
 .btn-purple {
-    background-color: var(--purple);
-    border-color: var(--purple);
+    background-color: #6B46C1;
+    border-color: #6B46C1;
     color: white;
 }
 .btn-purple:hover {
@@ -12,25 +25,25 @@
 }
 .btn-white {
     background-color: white;
-    border: 1px solid var(--purple);
-    color: var(--purple);
-    width: 77px;
-    height: 40px;
-    border-radius: 6px;
-    padding: 8px 16px;
-    font-size: 14px;
-    line-height: 24px;
+    border: 0.0625rem solid #6B46C1;
+    color: #6B46C1;
+    width: 4.8125rem;
+    height: 2.5rem;
+    border-radius: 0.375rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    line-height: 1.5rem;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     text-align: center;
-    margin-left: 10px;
 }
 .btn-white:hover {
     background-color: #f8f9fa;
-    color: var(--purple);
+    color: #6B46C1;
 }
 .navbar .btn-group {
     display: flex;
-    gap: 10px;
+    gap: 0.625rem;
 }
+
