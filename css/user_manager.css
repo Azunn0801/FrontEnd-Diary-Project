@@ -1,0 +1,154 @@
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #FAFAFB;
+    font-family: Arial, Helvetica, sans-serif;
+    padding-top: 60px; /* Thêm để tạo khoảng cách cho navbar cố định */
+}
+
+.custom-navbar {
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+    padding: 10px 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.brand-name {
+    font-weight: 600;
+    font-size: 18px;
+    font-family: 'Inter', sans-serif;
+}
+
+#search-bar {
+    margin: 30px;
+    width: 600px;
+    height: 65px;
+    border: none;
+    margin-left: 500px;
+    padding-left: 70px;
+    background-image: url('../assets/icons/search.svg');
+    background-repeat: no-repeat;
+    background-position: 20px center;
+}
+
+#search-bar::placeholder {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 18px;
+    color: #101828;
+}
+
+.profile-picture {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.logo-icon {
+    width: 24px;
+    height: 24px;
+    background-color: #FF5555;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 8px;
+}
+
+header {
+    height: 0; /* Đặt height thành 0 vì nội dung là fixed */
+    width: 100%;
+}
+
+.sidebar {
+    width: 200px;
+    height: 100vh;
+    background-color: #fff;
+    position: fixed;
+    padding: 20px;
+    top: 60px;
+}
+
+.main-content {
+    margin-left: 220px;
+    padding: 20px;
+    margin-top: 0; /* Đặt lại để tránh khoảng cách dư thừa */
+}
+
+.sidebar-btn {
+    background-color: #e0e7ff;
+    color: blue;
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 8px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    text-align: left;
+    display: flex;
+    align-items: center;
+}
+
+.sidebar-btn i {
+    color: orange;
+    margin-right: 10px;
+}
+
+.header {
+    background-color: #e0e7ff;
+    padding: 10px 20px;
+}
+
+.category-section {
+    background-color: #FFFFFF;
+}
+
+.btn-success {
+    width: 100%;
+    margin-top: 20px;
+    background-color: #28A745;
+}
+
+.table {
+    border: 1px solid #DDDDDD;
+    background-color: #F4F4F4;
+}
+/* Phong cách cho nút hành động */
+.btn-purple {
+    background-color: #7E5CEF;
+    border-color: #7E5CEF;
+    color: #FFFFFF;
+}
+
+.btn-purple:hover {
+    background-color: #6644cc;
+}
+
+/* Phong cách cho phân trang */
+.pagination .page-link {
+    color: #6C757D; /* Màu xám cho các số trang */
+    background-color: #FFFFFF; /* Nền trắng */
+    border-color: #DDDDDD; /* Viền xám nhạt */
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #7E5CEF; /* Màu tím cho trang hiện tại */
+    border-color: #7E5CEF;
+    color: #FFFFFF; /* Chữ trắng */
+}
+
+.page-link-prev, .page-link-next {
+    background-color: #E0D6FF; /* Màu tím nhạt cho Previous/Next */
+    color: #FFFFFF;
+    border-color: #7E5CEF;
+}
+
+.page-link-prev:hover, .page-link-next:hover {
+    background-color: #C7B7FF; /* Màu tím nhạt hơn khi hover */
+}
