@@ -1,16 +1,7 @@
 const entries = [
-    {
-        "id": 1,
-        "name": "Nhật ký học tập"
-    },
-    {
-        "id": 2,
-        "name": "Nhật ký mục tiêu và kế hoạch"
-    },
-    {
-        "id": 3,
-        "name": "Nhật ký trải nghiệm- học qua đời sống"
-    }
+    { id: 1, name: "Nhật ký học tập" },
+    { id: 2, name: "Nhật ký mục tiêu và kế hoạch" },
+    { id: 3, name: "Nhật ký trải nghiệm- học qua đời sống" }
 ];
 
 let articles = JSON.parse(localStorage.getItem("articles"));
@@ -22,234 +13,174 @@ if (!articles) {
 const articlesPerPage = 5;
 let currentPage = 1;
 
-document.addEventListener('DOMContentLoaded', function () {
-    let articles;
-    const storedArticles = localStorage.getItem('articles');
-    if (storedArticles) {
-        articles = JSON.parse(storedArticles);
-    } else {
-        articles = [
-            {
-                title: "Học nấu cá sốt cà chua",
-                category: "Nấu ăn",
-                content: "tôi đã học được cách nấu ăn...",
-                status: "Public",
-                image: "../assets/images/thumbnail1.jpg"
-            },
-            {
-                title: "Bí kíp viết CV ngành IT",
-                category: "IT",
-                content: "Chia sẻ cách viết CV ấn tượng...",
-                status: "Private",
-                image: "../assets/images/thumbnail2.jpg"
-            }
-        ];
-        localStorage.setItem('articles', JSON.stringify(articles));
-    }
+document.addEventListener('DOMContentLoaded', () => {
+    const stored = localStorage.getItem('articles');
+    if (stored) articles = JSON.parse(stored);
 
-    const articlesTableBody = document.querySelector('.posts-container table tbody');
-    const paginationContainer = document.querySelector('.pagination');
-    const articleModalEl = document.getElementById('addArticleModal');
-    const modalTitleEl = document.getElementById('addArticleModalLabel');
-    const modalSaveBtn = document.getElementById('saveArticleBtn');
+    const tbody = document.querySelector('.posts-container table tbody');
+    const pagination = document.querySelector('.pagination');
+    const modalEl = document.getElementById('addArticleModal');
+    const modalTitle = document.getElementById('addArticleModalLabel');
+    const saveBtn = document.getElementById('saveArticleBtn');
+    const form = modalEl.querySelector('form');
+    const fileInput = document.getElementById('fileUpload');
+    const addBtn = document.querySelector('.add-button');
     let editingIndex = null;
 
-    function renderArticles() {
-        articlesTableBody.innerHTML = '';
-        const startIndex = (currentPage - 1) * articlesPerPage;
-        const endIndex = startIndex + articlesPerPage;
-        const paginatedArticles = articles.slice(startIndex, endIndex);
-        paginatedArticles.forEach((article, offset) => {
-            const index = startIndex + offset;
-            const row = document.createElement('tr');
-            row.dataset.index = index;
+    const previewImg = document.getElementById('previewImage');
+    fileInput.addEventListener('change', e => {
+        if (e.target.files && e.target.files[0] && previewImg) {
+            const reader = new FileReader();
+            reader.onload = ev => previewImg.src = ev.target.result;
+            reader.readAsDataURL(e.target.files[0]);
+        }
+    });
 
-            const imgTh = document.createElement('th');
-            imgTh.setAttribute('scope', 'row');
-            const imgElem = document.createElement('img');
-            imgElem.src = article.image || '';
-            imgElem.width = 100;
-            imgElem.height = 70;
-            imgTh.appendChild(imgElem);
-            row.appendChild(imgTh);
+    addBtn.addEventListener('click', () => {
+        editingIndex = null;
+        form.reset();
+        if (previewImg) previewImg.src = '';
+        modalTitle.textContent = '📝 Add New Article';
+        saveBtn.textContent = 'Add';
+    });
 
-            const titleTd = document.createElement('td');
-            titleTd.textContent = article.title;
-            row.appendChild(titleTd);
+    function renderTable() {
+        tbody.innerHTML = '';
+        const start = (currentPage - 1) * articlesPerPage;
+        const pageItems = articles.slice(start, start + articlesPerPage);
+        pageItems.forEach((art, i) => {
+            const idx = start + i;
+            const tr = document.createElement('tr'); tr.dataset.index = idx;
 
-            const categoryTd = document.createElement('td');
-            categoryTd.textContent = article.category;
-            row.appendChild(categoryTd);
+            const th = document.createElement('th'); th.scope = 'row';
+            const img = document.createElement('img'); img.src = art.image || '';
+            img.width = 100; img.height = 70;
+            th.appendChild(img);
+            tr.appendChild(th);
 
-            const contentTd = document.createElement('td');
-            contentTd.textContent = article.content;
-            row.appendChild(contentTd);
+            ['title', 'category', 'content', 'status'].forEach(key => {
+                const td = document.createElement('td'); td.textContent = art[key];
+                if (key === 'status') td.className = 'status';
+                tr.appendChild(td);
+            });
 
-            const statusTd = document.createElement('td');
-            statusTd.className = 'status';
-            statusTd.textContent = article.status;
-            row.appendChild(statusTd);
+            const tdSel = document.createElement('td');
+            const sel = document.createElement('select'); sel.className = 'form-select status-select';
+            ['Public', 'Private'].forEach(s => {
+                const o = document.createElement('option'); o.value = s; o.textContent = s;
+                if (art.status === s) o.selected = true;
+                sel.appendChild(o);
+            });
+            sel.dataset.index = idx; tdSel.appendChild(sel); tr.appendChild(tdSel);
 
-            const statusSelectTd = document.createElement('td');
-            const select = document.createElement('select');
-            select.className = 'form-select status-select';
-            const optPublic = document.createElement('option'); optPublic.value = 'Public'; optPublic.textContent = 'Public';
-            const optPrivate = document.createElement('option'); optPrivate.value = 'Private'; optPrivate.textContent = 'Private';
-            if (article.status === 'Public') optPublic.selected = true;
-            else optPrivate.selected = true;
-            select.appendChild(optPublic);
-            select.appendChild(optPrivate);
-            select.dataset.index = index;
-            statusSelectTd.appendChild(select);
-            row.appendChild(statusSelectTd);
+            const tdAct = document.createElement('td');
+            const btnE = document.createElement('button'); btnE.className = 'btn btn-warning edit-article'; btnE.textContent = 'Sửa';
+            const btnD = document.createElement('button'); btnD.className = 'btn btn-danger delete-article'; btnD.textContent = 'Xóa';
+            tdAct.append(btnE, btnD); tr.appendChild(tdAct);
 
-            const actionsTd = document.createElement('td');
-            const editBtn = document.createElement('button');
-            editBtn.className = 'btn btn-warning edit-article';
-            editBtn.textContent = 'Sửa';
-            const deleteBtn = document.createElement('button');
-            deleteBtn.className = 'btn btn-danger delete-article';
-            deleteBtn.textContent = 'Xóa';
-            actionsTd.appendChild(editBtn);
-            actionsTd.appendChild(deleteBtn);
-            row.appendChild(actionsTd);
-
-            articlesTableBody.appendChild(row);
+            tbody.appendChild(tr);
         });
     }
 
     function renderPagination() {
-        paginationContainer.innerHTML = '';
+        pagination.innerHTML = '';
         const totalPages = Math.ceil(articles.length / articlesPerPage);
-
-        const prevLi = document.createElement('li');
-        prevLi.className = `page-item ${currentPage === 1 ? 'disabled' : ''}`;
-        const prevLink = document.createElement('a');
-        prevLink.className = 'page-link'; prevLink.href = '#'; prevLink.textContent = 'Previous';
-        prevLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            if (currentPage > 1) {
-                currentPage--;
-                renderArticles();
-                renderPagination();
-            }
-        });
-        prevLi.appendChild(prevLink); paginationContainer.appendChild(prevLi);
-
+        const navBtn = (text, disabled, action) => {
+            const li = document.createElement('li'); li.className = `page-item ${disabled ? 'disabled' : ''}`;
+            const a = document.createElement('a'); a.className = 'page-link'; a.href = '#'; a.textContent = text;
+            if (!disabled) a.addEventListener('click', e => { e.preventDefault(); action(); });
+            li.appendChild(a); return li;
+        };
+        pagination.appendChild(navBtn('Previous', currentPage === 1, () => { currentPage--; render(); }));
         for (let i = 1; i <= totalPages; i++) {
-            const li = document.createElement('li');
-            li.className = `page-item ${i === currentPage ? 'active' : ''}`;
-            const link = document.createElement('a'); link.className = 'page-link'; link.href = '#'; link.textContent = i;
-            link.addEventListener('click', (e) => { e.preventDefault(); currentPage = i; renderArticles(); renderPagination(); });
-            li.appendChild(link); paginationContainer.appendChild(li);
+            const li = document.createElement('li'); li.className = `page-item ${i === currentPage ? 'active' : ''}`;
+            const a = document.createElement('a'); a.className = 'page-link'; a.href = '#'; a.textContent = i;
+            a.addEventListener('click', e => { e.preventDefault(); currentPage = i; render(); });
+            li.appendChild(a); pagination.appendChild(li);
         }
-
-        const nextLi = document.createElement('li');
-        nextLi.className = `page-item ${currentPage === totalPages ? 'disabled' : ''}`;
-        const nextLink = document.createElement('a'); nextLink.className = 'page-link'; nextLink.href = '#'; nextLink.textContent = 'Next';
-        nextLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            if (currentPage < totalPages) {
-                currentPage++;
-                renderArticles();
-                renderPagination();
-            }
-        });
-        nextLi.appendChild(nextLink); paginationContainer.appendChild(nextLi);
+        pagination.appendChild(navBtn('Next', currentPage === totalPages, () => { currentPage++; render(); }));
     }
 
-    renderArticles();
-    renderPagination();
+    function render() { renderTable(); renderPagination(); }
+    render();
 
-    articleModalEl.addEventListener('hidden.bs.modal', () => {
-        document.querySelector('#addArticleModal form').reset();
-        modalTitleEl.textContent = '📝 Add New Article';
-        modalSaveBtn.textContent = 'Add';
-        editingIndex = null;
+    tbody.addEventListener('click', e => {
+        const tr = e.target.closest('tr'); if (!tr) return;
+        const idx = +tr.dataset.index;
+        if (e.target.classList.contains('edit-article')) {
+            editingIndex = idx; const art = articles[idx];
+            modalTitle.textContent = '📝 Cập nhật bài viết'; saveBtn.textContent = 'Cập nhật';
+            form.reset();
+            document.getElementById('title').value = art.title;
+            document.getElementById('categories').value = art.category;
+            document.getElementById('content').value = art.content;
+            document.getElementById(art.status === 'Public' ? 'public' : 'private').checked = true;
+            if (previewImg) previewImg.src = art.image || '';
+            bootstrap.Modal.getOrCreateInstance(modalEl).show();
+        }
+        if (e.target.classList.contains('delete-article')) {
+            if (confirm('Bạn có chắc chắn muốn xóa?')) {
+                articles.splice(idx, 1);
+                localStorage.setItem('articles', JSON.stringify(articles));
+                if (currentPage > Math.ceil(articles.length / articlesPerPage)) currentPage--;
+                render(); showToast('Xóa thành công!');
+            }
+        }
     });
 
-    modalSaveBtn.addEventListener('click', function () {
+    function finishSave(data) {
+        if (editingIndex !== null) articles[editingIndex] = data;
+        else articles.push(data);
+        localStorage.setItem('articles', JSON.stringify(articles));
+        if (currentPage > Math.ceil(articles.length / articlesPerPage)) currentPage = Math.ceil(articles.length / articlesPerPage);
+        bootstrap.Modal.getInstance(modalEl).hide();
+        render();
+        showToast(editingIndex !== null ? 'Cập nhật thành công!' : 'Thêm thành công!');
+        editingIndex = null;
+    }
+
+    saveBtn.addEventListener('click', () => {
         const title = document.getElementById('title').value.trim();
         const category = document.getElementById('categories').value.trim();
         const content = document.getElementById('content').value.trim();
         const statusRadio = document.querySelector('input[name="status"]:checked');
-        const statusValue = statusRadio ? statusRadio.value : 'public';
-        const status = statusValue.toLowerCase() === 'private' ? 'Private' : 'Public';
-        if (title === '' || content === '') { alert("Vui lòng nhập tiêu đề và nội dung bài viết"); return; }
-        const newArticle = { title, category, content, status, image: '' };
-        const fileInput = document.getElementById('fileUpload');
-        if (fileInput.files.length > 0) {
-            const file = fileInput.files[0]; const reader = new FileReader();
-            reader.onload = function (e) { newArticle.image = e.target.result; saveArticle(newArticle); };
-            reader.readAsDataURL(file);
+        const status = statusRadio ? statusRadio.value : 'public';
+        if (!title || !content) { alert('Vui lòng nhập tiêu đề và nội dung'); return; }
+        const data = { title, category, content, status: status.charAt(0).toUpperCase() + status.slice(1), image: '' };
+        if (fileInput.files && fileInput.files[0]) {
+            const reader = new FileReader();
+            reader.onload = ev => { data.image = ev.target.result; finishSave(data); };
+            reader.readAsDataURL(fileInput.files[0]);
         } else {
-            newArticle.image = editingIndex !== null ? articles[editingIndex].image : '';
-            saveArticle(newArticle);
+            if (editingIndex !== null) data.image = articles[editingIndex].image;
+            finishSave(data);
         }
     });
 
-    function saveArticle(articleData) {
-        if (editingIndex !== null) articles[editingIndex] = articleData;
-        else articles.push(articleData);
-        localStorage.setItem('articles', JSON.stringify(articles));
-        const totalPages = Math.ceil(articles.length / articlesPerPage);
-        if (currentPage > totalPages) currentPage = totalPages;
-        renderArticles();
-        renderPagination();
-        bootstrap.Modal.getInstance(articleModalEl).hide();
-        showToast(editingIndex !== null ? "Cập nhật bài viết thành công!" : "Thêm bài viết thành công!");
-    }
+    modalEl.addEventListener('hidden.bs.modal', () => {
+        form.reset(); if (previewImg) previewImg.src = '';
+        editingIndex = null; modalTitle.textContent = '📝 Add New Article'; saveBtn.textContent = 'Add';
+    });
 
-    document.querySelector('.posts-container table tbody').addEventListener('click', function (e) {
-        const target = e.target; const row = target.closest('tr'); if (!row) return;
-        const idx = Number(row.dataset.index);
-        if (target.classList.contains('edit-article')) {
-            editingIndex = idx;
-            const article = articles[idx];
-            document.getElementById('title').value = article.title;
-            document.getElementById('categories').value = article.category;
-            document.getElementById('content').value = article.content;
-            if (article.status === 'Public') document.getElementById('public').checked = true;
-            else document.getElementById('private').checked = true;
-            modalTitleEl.textContent = '📝 Cập nhật bài viết'; modalSaveBtn.textContent = 'Cập nhật';
-            bootstrap.Modal.getOrCreateInstance(articleModalEl).show();
-        }
-        if (target.classList.contains('delete-article')) {
-            if (confirm("Bạn có chắc chắn không?")) {
-                articles.splice(idx, 1);
+    tbody.addEventListener('change', e => {
+        if (e.target.classList.contains('status-select')) {
+            const idx = +e.target.dataset.index;
+            const ns = e.target.value;
+            if (confirm('Bạn có chắc chắn muốn thay đổi trạng thái?')) {
+                articles[idx].status = ns;
                 localStorage.setItem('articles', JSON.stringify(articles));
-                const totalPages = Math.ceil(articles.length / articlesPerPage);
-                if (currentPage > totalPages) currentPage = totalPages;
-                renderArticles(); renderPagination(); showToast("Xóa bài viết thành công!");
-            }
+                render(); showToast('Trạng thái cập nhật!');
+            } else e.target.value = articles[idx].status;
         }
     });
 
-    document.querySelector('.posts-container table tbody').addEventListener('change', function (e) {
-        const target = e.target;
-        if (target.classList.contains('status-select')) {
-            const idx = Number(target.dataset.index);
-            const newStatus = target.value;
-            if (confirm("Bạn có chắc chắn không?")) {
-                articles[idx].status = newStatus;
-                localStorage.setItem('articles', JSON.stringify(articles));
-                renderArticles(); renderPagination(); showToast("Cập nhật trạng thái bài viết thành công!");
-            } else {
-                target.value = articles[idx].status;
-            }
-        }
-    });
-
-    function showToast(message) {
+    function showToast(msg) {
         const toastEl = document.createElement('div');
         toastEl.className = 'toast align-items-center text-bg-success border-0';
         toastEl.setAttribute('role', 'alert'); toastEl.setAttribute('aria-live', 'assertive'); toastEl.setAttribute('aria-atomic', 'true');
-        toastEl.innerHTML = `
-            <div class=\"d-flex\">\n                <div class=\"toast-body\">${message}</div>\n                <button type=\"button\" class=\"btn-close btn-close-white me-2 m-auto\" data-bs-dismiss=\"toast\" aria-label=\"Close\"></button>\n            </div>`;
+        toastEl.innerHTML = `<div class="d-flex"><div class="toast-body">${msg}</div><button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button></div>`;
         let container = document.getElementById('toastContainer');
         if (!container) { container = document.createElement('div'); container.id = 'toastContainer'; container.className = 'position-fixed bottom-0 end-0 p-3'; container.style.zIndex = '9999'; document.body.appendChild(container); }
-        container.appendChild(toastEl);
-        const bsToast = new bootstrap.Toast(toastEl, { delay: 3000 }); bsToast.show();
-        toastEl.addEventListener('hidden.bs.toast', () => { toastEl.remove(); });
+        container.appendChild(toastEl); new bootstrap.Toast(toastEl, { delay: 3000 }).show(); toastEl.addEventListener('hidden.bs.toast', () => toastEl.remove());
     }
 });
