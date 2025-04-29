@@ -102,22 +102,18 @@ footer {
 footer p {
     color: white;
     margin: 0;
-    /* Loại bỏ margin để căn chỉnh tốt hơn */
 }
 
 footer .icon-deck {
     display: flex;
     align-items: center;
-    /* Căn giữa icon theo chiều dọc */
     gap: 10px;
-    /* Khoảng cách giữa các icon */
 }
 
 footer a {
     color: white;
     text-decoration: none;
     display: inline-flex;
-    /* Đảm bảo icon căn giữa */
     align-items: center;
 }
 
@@ -126,7 +122,6 @@ footer img {
     height: 20px;
     padding: 0 10px;
     margin-right: 0;
-    /* Loại bỏ margin-right để không lệch */
     filter: brightness(0) invert(1);
 }
 
