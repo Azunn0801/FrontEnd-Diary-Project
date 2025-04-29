@@ -27,7 +27,6 @@ document.addEventListener('DOMContentLoaded', () => {
   
     renderCategories();
   
-    // Thêm mới từ Modal
     saveBtn.addEventListener('click', () => {
       const name = newCategoryInput.value.trim();
       if (!name) return;
@@ -38,7 +37,6 @@ document.addEventListener('DOMContentLoaded', () => {
       showToast("Thêm chủ đề thành công!");
     });
   
-    // Edit / Delete
     categoryTableBody.addEventListener('click', (e) => {
       const target = e.target;
       const row    = target.closest('tr');
@@ -68,7 +66,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   
-    // Toast helper
     function showToast(msg) {
       const toastEl = document.createElement('div');
       toastEl.className = 'toast align-items-center text-bg-success border-0';

@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // Khởi tạo dữ liệu người dùng từ LocalStorage hoặc dữ liệu mẫu ban đầu
     let users;
     const storedUsers = localStorage.getItem('users');
     if (storedUsers) {
@@ -18,33 +17,26 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const userTableBody = document.querySelector('.user-table-section table tbody');
 
-    // Hàm hiển thị (render) bảng người dùng
     function renderUsers() {
         userTableBody.innerHTML = '';
         users.forEach((user, index) => {
             const row = document.createElement('tr');
-            // Cột tên + ảnh + username
             const nameCell = document.createElement('td');
             nameCell.innerHTML =
                 `<img src="../assets/images/user.png" alt="Profile" width="40" height="40" class="rounded-circle profile-picture"> 
                  ${user.name} <span class="text-muted">@${user.username}</span>`;
-            // Cột trạng thái
             const statusCell = document.createElement('td');
             statusCell.textContent = user.status;
-            // Cột email
             const emailCell = document.createElement('td');
             emailCell.textContent = user.email;
-            // Cột hành động (Block/Unblock)
             const actionsCell = document.createElement('td');
             if (user.status === 'Hoạt động') {
-                // Nếu đang hoạt động thì hiện nút Block
                 const blockBtn = document.createElement('button');
                 blockBtn.className = 'btn btn-sm btn-purple block-btn';
                 blockBtn.textContent = 'Block';
                 actionsCell.appendChild(blockBtn);
             }
             if (user.status === 'Bị khóa') {
-                // Nếu đang bị khóa thì hiện nút Unblock
                 const unblockBtn = document.createElement('button');
                 unblockBtn.className = 'btn btn-sm btn-purple unblock-btn';
                 unblockBtn.textContent = 'Unblock';
@@ -54,20 +46,18 @@ document.addEventListener('DOMContentLoaded', function () {
             row.appendChild(statusCell);
             row.appendChild(emailCell);
             row.appendChild(actionsCell);
-            row.dataset.index = index;  // lưu chỉ số người dùng vào data-index của dòng
+            row.dataset.index = index; 
             userTableBody.appendChild(row);
         });
     }
 
     renderUsers();
 
-    // Lắng nghe sự kiện click trên bảng người dùng (sử dụng event delegation)
     userTableBody.addEventListener('click', function (e) {
         const target = e.target;
         if (target.classList.contains('block-btn')) {
             const idx = target.closest('tr').dataset.index;
             if (confirm("Bạn có chắc chắn không?")) {
-                // Khóa người dùng
                 users[idx].status = 'Bị khóa';
                 localStorage.setItem('users', JSON.stringify(users));
                 renderUsers();
@@ -77,7 +67,6 @@ document.addEventListener('DOMContentLoaded', function () {
         if (target.classList.contains('unblock-btn')) {
             const idx = target.closest('tr').dataset.index;
             if (confirm("Bạn có chắc chắn không?")) {
-                // Mở khóa người dùng
                 users[idx].status = 'Hoạt động';
                 localStorage.setItem('users', JSON.stringify(users));
                 renderUsers();
@@ -86,7 +75,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // Hàm hiển thị toast thông báo (sử dụng Bootstrap Toast)
     function showToast(message) {
         const toastEl = document.createElement('div');
         toastEl.className = 'toast align-items-center text-bg-success border-0';
@@ -99,7 +87,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 <button type="button" class="btn-close btn-close-white me-2 m-auto" 
                         data-bs-dismiss="toast" aria-label="Close"></button>
             </div>`;
-        // Thêm toast vào container (tạo container nếu chưa có)
         let container = document.getElementById('toastContainer');
         if (!container) {
             container = document.createElement('div');
@@ -109,10 +96,8 @@ document.addEventListener('DOMContentLoaded', function () {
             document.body.appendChild(container);
         }
         container.appendChild(toastEl);
-        // Khởi tạo và hiển thị toast bằng Bootstrap
         const bsToast = new bootstrap.Toast(toastEl, { delay: 3000 });
         bsToast.show();
-        // Khi ẩn thì loại bỏ phần tử toast khỏi DOM để tránh tích tụ
         toastEl.addEventListener('hidden.bs.toast', () => {
             toastEl.remove();
         });

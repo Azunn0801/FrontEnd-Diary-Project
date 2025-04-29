@@ -1,6 +1,5 @@
 console.log("register.js loaded ✅");
 
-// Regex kiểm tra định dạng email
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const initUsers = [
@@ -8,7 +7,6 @@ const initUsers = [
   { id: 2, firstname: "Vũ", lastname: "Hồng Vân", email: "hongvan@yahoo.com", password: "abc123" }
 ];
 
-// Lấy hoặc khởi tạo danh sách users
 let users = JSON.parse(localStorage.getItem("users"));
 if (!users) {
   users = initUsers;
@@ -30,11 +28,9 @@ document.addEventListener('DOMContentLoaded', () => {
     event.preventDefault();
     let errors = [];
 
-    // Validate first/last name
     if (!firstNameInput.value.trim()) errors.push("First name is required");
     if (!lastNameInput.value.trim())  errors.push("Last name is required");
 
-    // Validate email với regex mới
     const emailVal = emailInput.value.trim();
     if (!emailVal) {
       errors.push("Email is required");
@@ -42,7 +38,6 @@ document.addEventListener('DOMContentLoaded', () => {
       errors.push("Email is invalid");
     }
 
-    // Validate password
     const pwd = passwordInput.value;
     if (!pwd) {
       errors.push("Password is required");
@@ -50,21 +45,18 @@ document.addEventListener('DOMContentLoaded', () => {
       errors.push("Password must be at least 6 characters");
     }
 
-    // Confirm password
     if (!confirmPwdInput.value) {
       errors.push("Confirm password is required");
     } else if (confirmPwdInput.value !== pwd) {
       errors.push("Passwords do not match");
     }
 
-    // Nếu có lỗi thì show toast
     if (errors.length) {
       toastElement.querySelector('.toast-body').innerHTML = errors.join("<br>");
       toast.show();
       return;
     }
 
-    // Log test
     console.log({
       first:   firstNameInput.value,
       last:    lastNameInput.value,
@@ -73,7 +65,6 @@ document.addEventListener('DOMContentLoaded', () => {
       confirm: confirmPwdInput.value
     });
 
-    // Tạo object user mới
     const user = {
       id: users.length + 1,
       firstname: firstNameInput.value.trim(),
@@ -83,12 +74,10 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     console.log("Thêm user:", user);
 
-    // Lưu vào LocalStorage
     users.push(user);
     localStorage.setItem("users", JSON.stringify(users));
     console.log("Users hiện tại:", users);
 
-    // Chuyển trang
     window.location.href = "../pages/login.html";
   });
 });
