@@ -4,7 +4,7 @@ body {
     box-sizing: border-box;
     background-color: #FAFAFB;
     font-family: Arial, Helvetica, sans-serif;
-    padding-top: 60px; /* Thêm để tạo khoảng cách cho navbar cố định */
+    padding-top: 60px;
 }
 
 .custom-navbar {
@@ -62,7 +62,7 @@ body {
 }
 
 header {
-    height: 0; /* Đặt height thành 0 vì nội dung là fixed */
+    height: 7%;
     width: 100%;
 }
 
@@ -78,7 +78,7 @@ header {
 .main-content {
     margin-left: 220px;
     padding: 20px;
-    margin-top: 0; /* Đặt lại để tránh khoảng cách dư thừa */
+    margin-top: 0;
 }
 
 .sidebar-btn {
@@ -130,25 +130,30 @@ header {
     background-color: #6644cc;
 }
 
-/* Phong cách cho phân trang */
 .pagination .page-link {
-    color: #6C757D; /* Màu xám cho các số trang */
-    background-color: #FFFFFF; /* Nền trắng */
-    border-color: #DDDDDD; /* Viền xám nhạt */
+    color: #6C757D;
+    background-color: #FFFFFF; 
+    border-color: #DDDDDD; 
 }
 
 .pagination .page-item.active .page-link {
-    background-color: #7E5CEF; /* Màu tím cho trang hiện tại */
+    background-color: #7E5CEF;
     border-color: #7E5CEF;
-    color: #FFFFFF; /* Chữ trắng */
+    color: #FFFFFF;
 }
 
 .page-link-prev, .page-link-next {
-    background-color: #E0D6FF; /* Màu tím nhạt cho Previous/Next */
+    background-color: #E0D6FF;
     color: #FFFFFF;
     border-color: #7E5CEF;
 }
 
 .page-link-prev:hover, .page-link-next:hover {
-    background-color: #C7B7FF; /* Màu tím nhạt hơn khi hover */
+    background-color: #C7B7FF; 
+}
+
+.header-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 20px;
 }

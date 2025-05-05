@@ -70,6 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
       firstname: firstNameInput.value.trim(),
       lastname:  lastNameInput.value.trim(),
       email:     emailVal,
+      status: "Hoạt động",
       password:  pwd
     };
     console.log("Thêm user:", user);

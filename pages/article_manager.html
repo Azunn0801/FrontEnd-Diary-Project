@@ -27,7 +27,7 @@
 
         <div class="col-auto">
           <div class="dropdown">
-            <img src="" alt="Profile" width="40" height="40"
+            <img src="../assets/images/user.png" alt="Profile" width="40" height="40"
               class="rounded-circle profile-picture dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
             <ul class="dropdown-menu dropdown-menu-end">
               <li><a class="dropdown-item" href="#">View profile</a></li>
@@ -125,8 +125,10 @@
             </div>
             <div class="mb-3">
               <label for="categories" class="form-label">Article Categories</label>
-              <input type="text" class="form-control custom-input" id="categories" placeholder="Enter categories">
+              <select class="form-select custom-input" id="categories">
+              </select>
             </div>
+            
             <div class="mb-3">
               <label for="mood" class="form-label">Mood</label>
               <div class="input-group">
@@ -163,7 +165,9 @@
                     d="M4.5 3a2.5 2.5 0 0 1 5 0v9a1.5 1.5 0 0 1-3 0V5a.5.5 0 0 1 1 0v7a.5.5 0 0 0 1 0V3a1.5 1.5 0 1 0-3 0v9a2.5 2.5 0 0 0 5 0V5a.5.5 0 0 1 1 0v7a3.5 3.5 0 1 1-7 0V3z" />
                 </svg>
                 <p>Browse and choose the files you want to upload from your computer</p>
-                <input type="file" id="fileUpload" style="display: none;" multiple>
+                <input type="file" id="fileUpload" style="display: none;" accept="image/*">
+                <img id="previewImage" src="" alt="Preview" class="img-thumbnail mt-2"
+                  style="max-width: 200px; display: none;">
                 <button type="button" class="btn btn-secondary mt-2"
                   onclick="document.getElementById('fileUpload').click()">Browse</button>
               </div>
@@ -177,9 +181,6 @@
       </div>
     </div>
   </div>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.min.js"
-    integrity="sha384-VQqxDN0EQCkWoxt/0vsQvZswzTHUVOImccYmSyhJTp7kGtPed0Qcx8rK9h9YEgx+"
-    crossorigin="anonymous"></script>
   <script src="../js/article_manager.js"></script>
 </body>
 

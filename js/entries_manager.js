@@ -6,8 +6,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   
     const categoryTableBody = document.querySelector('.category-list tbody');
-    const newCategoryInput  = document.getElementById('new-category-name');
-    const saveBtn           = document.getElementById('saveCategoryBtn');
+    const newCategoryInput = document.getElementById('new-category-name');
+    const saveBtn = document.getElementById('saveCategoryBtn');
   
     function renderCategories() {
       categoryTableBody.innerHTML = '';

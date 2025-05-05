@@ -17,13 +17,13 @@
 <body>
     <div class="sidebar">
         <button class="sidebar-btn">
-            📂 Manage Users
+            <a href="./user_manager.html">📂 Manage Users</a>
         </button>
         <button class="sidebar-btn">
-            <i class="fas fa-file"></i> Manage Entries
+            <a href="./entries_manager.html"><i class="fas fa-file"></i> Manage Entries</a>
         </button>
         <button class="sidebar-btn">
-            <i class="fas fa-newspaper"></i> Manage Article
+            <a href="./article_manager.html"><i class="fas fa-newspaper"></i> Manage Article</a>
         </button>
         <button class="sidebar-btn">
             <i class="fas fa-sign-out-alt"></i> Log out
@@ -31,10 +31,11 @@
     </div>
     <div class="main-content">
         <header class="navbar navbar-light custom-navbar">
-            <i class="fa-light fa-envelope" style="color: #3f3f46;"></i>
+            <img src="../assets/icons/envelope-regular.svg" alt="inbox" width="20" height="20" class="header-icon">
+            <img src="../assets/icons/bell-regular.svg" alt="notification" width="20" height="20" class="header-icon">
             <div class="col-auto">
                 <div class="dropdown">
-                    <img src="profile.jpg" alt="Profile" width="40" height="40"
+                    <img src="../assets/images/user.png" alt="Profile" width="40" height="40"
                         class="rounded-circle profile-picture dropdown-toggle" data-bs-toggle="dropdown"
                         aria-expanded="false">
                     <ul class="dropdown-menu dropdown-menu-end">
@@ -48,8 +49,9 @@
                     </ul>
                 </div>
             </div>
+        </header>
     </div>
-    <input type="search" name="search" class="form-control" id="search-bar" placeholder="Search Article Categories">
+    <input type="search" name="search" class="form-control" id="search-bar" placeholder="Search Users">
     <div class="main-content">
         <div class="user-table-section">
             <h2>Manage Users</h2>
@@ -141,7 +143,6 @@
                             <button class="btn btn-sm btn-purple">Unblock</button>
                         </td>
                     </tr>
-                    <!-- Thêm các hàng khác nếu cần -->
                 </tbody>
             </table>
             <nav aria-label="Page navigation">

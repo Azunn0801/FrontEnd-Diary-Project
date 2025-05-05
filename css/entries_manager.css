@@ -124,3 +124,9 @@ header {
     border: 1px solid #DDDDDD;
     background-color: #F4F4F4;
 }
+
+.header-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 20px;
+}
