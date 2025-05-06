@@ -8,13 +8,6 @@ document.addEventListener('DOMContentLoaded', function () {
         const q = searchBox.value.trim();
         if (q) window.location.href = `../pages/search_results.html?q=${encodeURIComponent(q)}`;
     });
-    searchBox.addEventListener('keypress', e => {
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            const q = searchBox.value.trim();
-            if (q) window.location.href = `../pages/search_results.html?q=${encodeURIComponent(q)}`;
-        }
-    });
     document.getElementById('logoutLink').addEventListener('click', e => {
         e.preventDefault();
         localStorage.removeItem('currentUser');

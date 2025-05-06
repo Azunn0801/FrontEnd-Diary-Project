@@ -1,0 +1,37 @@
+.custom-navbar {
+    height: 83px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+.logo-icon {
+    width: 24px;
+    height: 24px;
+    background-color: #FF5555;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 8px;
+}
+
+.brand-name {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    color: #1F2937;
+}
+
+.search-input {
+    border: 1px solid #DDE2E4;
+}
+
+.search-icon {
+    border: 1px solid #DDE2E4;
+    background: #FFF;
+    color: #B0BABF;
+}
+
+.profile-picture {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+}
