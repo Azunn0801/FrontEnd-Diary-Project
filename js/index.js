@@ -1,3 +1,15 @@
+let users = JSON.parse(localStorage.getItem("users")) || [
+  { firstName: "Olivia", lastName: "Rhye", username: "olivia", email: "olivia@untitledui.com", status: "Hoạt động", avatar: "../assets/images/olivia.jpg", password: "password123" },
+  { firstName: "Phoenix", lastName: "Baker", username: "phoenix", email: "phoenix@untitledui.com", status: "Hoạt động", avatar: "../assets/images/phoenix.jpg", password: "password456" },
+  { firstName: "Lana", lastName: "Steiner", username: "lana", email: "lana@untitledui.com", status: "Hoạt động", avatar: "../assets/images/lana.jpg", password: "password789" },
+  { firstName: "Demi", lastName: "Wilkinson", username: "demi", email: "demi@untitledui.com", status: "Hoạt động", avatar: "../assets/images/demi.jpg", password: "passwordABC" },
+  { firstName: "Candice", lastName: "Wu", username: "candice", email: "candice@untitledui.com", status: "Hoạt động", avatar: "../assets/images/candice.jpg", password: "passwordDEF" },
+  { firstName: "Natali", lastName: "Craig", username: "natali", email: "natali@untitledui.com", status: "Hoạt động", avatar: "../assets/images/natali.jpg", password: "passwordGHI" },
+  { firstName: "Drew", lastName: "Cano", username: "drew", email: "drew@untitledui.com", status: "Hoạt động", avatar: "../assets/images/drew.jpg", password: "passwordJKL" },
+  { firstName: "Orlando", lastName: "Diggs", username: "orlando", email: "orlando@untitledui.com", status: "Hoạt động", avatar: "../assets/images/orlando.jpg", password: "passwordMNO" },
+  { firstName: "Andi", lastName: "Lane", username: "andi", email: "andi@untitledui.com", status: "Hoạt động", avatar: "../assets/images/andi.jpg", password: "passwordPQR" },
+  { firstName: "Kate", lastName: "Morrison", username: "kate", email: "kate@untitledui.com", status: "Hoạt động", avatar: "../assets/images/kate.jpg", password: "passwordSTU" }
+];
 const posts = JSON.parse(localStorage.getItem('articles')) || [];
 const categories = JSON.parse(localStorage.getItem('categories')) || [
   "Nấu ăn",
@@ -137,5 +149,53 @@ function renderCard(post) {
         <span class="badge bg-${post.category === 'Nấu ăn' ? 'success' : 'secondary'}">${post.category}</span>
       </div>
     </div>
+
   `;
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+  const authButtons = document.getElementById('auth-buttons');
+  const userAvatar  = document.getElementById('user-avatar');
+  const avatarImg   = document.getElementById('userAvatarImg');
+  const logoutLink  = document.getElementById('logoutLink');
+
+  const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+  if (currentUser && currentUser.avatar) {
+    authButtons.style.display = 'none';
+    avatarImg.src = currentUser.avatar;
+    userAvatar.style.display  = 'block';
+  } else {
+    authButtons.style.display = 'block';
+    userAvatar.style.display  = 'none';
+  }
+
+  logoutLink.addEventListener('click', e => {
+    e.preventDefault();
+    localStorage.removeItem('currentUser');
+    location.reload();
+  });
+});
+
+
+document.addEventListener('DOMContentLoaded', () => {
+
+  const logoutLink      = document.getElementById('logoutLink');
+  const confirmLogout  = document.getElementById('confirmLogoutBtn');
+  const logoutModalEl  = document.getElementById('logoutModal');
+  const bsLogoutModal  = bootstrap.Modal.getOrCreateInstance(logoutModalEl);
+
+  logoutLink.addEventListener('click', e => {
+    e.preventDefault();
+    bsLogoutModal.show();
+  });
+
+  confirmLogout.addEventListener('click', () => {
+    localStorage.removeItem('currentUser');
+    bsLogoutModal.hide();
+    location.reload();
+  });
+});
+
+
+
+

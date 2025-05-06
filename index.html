@@ -14,20 +14,68 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-light bg-light">
-        <div class="container-fluid d-flex justify-content-between align-items-center">
-            <a class="navbar-brand" href="#"><img src="./assets/icons/Logo.png" alt="Logo"><b
-                    style="font-weight: 600;">RIKKEI_EDU_BLOG</b></a>
-            <form class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="Search articles" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
-            <div class="btn-group">
-                <button class="btn btn-white"><a href="./pages/register.html">Sign Up</a></button>
-                <button class="btn btn-white"><a href="./pages/login.html">Sign In</a></button>
+    <!-- Logout Confirm Modal -->
+    <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="logoutModalLabel">Confirm Log Out</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to log out?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button id="confirmLogoutBtn" type="button" class="btn btn-danger">Log Out</button>
+                </div>
             </div>
         </div>
-    </nav>
+    </div>
+
+    <header class="navbar navbar-light custom-navbar">
+        <div class="container-fluid">
+            <div class="row w-100 align-items-center">
+                <!-- Brand -->
+                <div class="col-auto">
+                    <a class="navbar-brand d-flex align-items-center" href="./index.html">
+                        <img src="../assets/icons/Logo.png" alt="">
+                        <span class="brand-name">RIKKEI_EDU_BLOG</span>
+                    </a>
+                </div>
+
+                <!-- Search bar (luôn luôn hiện) -->
+                <div class="col">
+                    <form class="d-flex" role="search" action="./pages/search_results.html" method="get">
+                        <input class="form-control me-2" type="search" name="q" placeholder="Search articles..."
+                            aria-label="Search">
+                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    </form>
+                </div>
+
+                <!-- Auth buttons -->
+                <div class="col-auto" id="auth-buttons">
+                    <button class="btn btn-white"><a href="./pages/register.html">Sign Up</a></button>
+                    <button class="btn btn-white"><a href="./pages/login.html">Sign In</a></button>
+                </div>
+
+                <!-- User avatar (mặc định ẩn) -->
+                <div class="col-auto" id="user-avatar" style="display:none;">
+                    <div class="dropdown">
+                        <img id="userAvatarImg" src="../assets/images/user.png" alt="Profile" width="40" height="40"
+                            class="rounded-circle dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="./pages/dashboard.html">View profile</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#" id="logoutLink">Log out</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
 
     <main class="container my-5">
         <section class="recent-posts">
@@ -181,6 +229,9 @@
         </div>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
+            crossorigin="anonymous"></script>
     <script src="./js/index.js"></script>
 </body>
 

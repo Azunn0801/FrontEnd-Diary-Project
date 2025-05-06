@@ -1,0 +1,50 @@
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+.custom-navbar {
+    background-color: #ffffff;
+    height: 83px;
+}
+
+.brand-name {
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.search-input {
+    border-color: #DDE2E4;
+    width: 500px;
+}
+
+.search-icon {
+    background-color: #FFFFFF;
+    border-color: #DDE2E4;
+    color: #B0BABF;
+    cursor: pointer;
+}
+
+.profile-picture {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.avatar-preview {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid #dee2e6;
+}
+
+.form-section {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+#usernameWarning {
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+}

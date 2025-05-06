@@ -15,31 +15,40 @@
 </head>
 
 <body>
-  <header class="navbar navbar-light custom-navbar">
-    <div class="container-fluid">
-      <div class="row w-100 align-items-center justify-content-between">
-        <div class="col-auto">
-          <a class="navbar-brand d-flex align-items-center" href="./login.html">
-            <img src="../assets/icons/Logo.png" alt="">
-            <span class="brand-name">RIKKEI_EDU_BLOG</span>
-          </a>
-        </div>
-
-        <div class="col-auto">
-          <div class="dropdown">
-            <img src="../assets/images/user.png" alt="Profile" width="40" height="40"
-              class="rounded-circle profile-picture dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-            <ul class="dropdown-menu dropdown-menu-end">
-              <li><a class="dropdown-item" href="#">View profile</a></li>
-              <li><a class="dropdown-item" href="#">Update profile picture</a></li>
-              <li><a class="dropdown-item" href="#">Change password</a></li>
-              <li>
-                <hr class="dropdown-divider">
-              </li>
-              <li><a class="dropdown-item" href="#">Log out</a></li>
-            </ul>
-          </div>
-        </div>
+  <header class="navbar navbar-light bg-light py-2">
+    <div class="container-fluid d-flex align-items-center justify-content-between">
+      <!-- Brand -->
+      <a class="navbar-brand d-flex align-items-center" href="./index.html">
+        <img src="../assets/icons/Logo.png" alt="" width="32" height="32">
+        <span class="ms-2 fw-bold">RIKKEI_EDU_BLOG</span>
+      </a>
+      <!-- Search -->
+      <form class="d-flex flex-fill mx-4" role="search" action="./pages/search_results.html" method="get">
+        <input class="form-control" type="search" name="q" placeholder="Search for articles" aria-label="Search">
+        <button class="btn btn-outline-secondary ms-2" type="submit"><i class="bi bi-search"></i></button>
+      </form>
+      <!-- User Dropdown -->
+      <div class="dropdown">
+        <img id="headerAvatar" src="../assets/images/user.png" alt="Profile" width="40" height="40"
+          class="rounded-circle profile-picture dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+        <ul class="dropdown-menu dropdown-menu-end p-3" style="min-width: 200px;">
+          <li class="text-center mb-2">
+            <img id="dropdownAvatar" src="../assets/images/user.png" alt="Avatar" width="80" height="80"
+              class="rounded-circle mb-2">
+            <div id="dropdownName" class="fw-semibold"></div>
+            <div id="dropdownEmail" class="text-muted small"></div>
+          </li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+          <li><a class="dropdown-item" href="#">View profile</a></li>
+          <li><a class="dropdown-item" href="#">Update profile picture</a></li>
+          <li><a class="dropdown-item" href="#">Change password</a></li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+          <li><a class="dropdown-item" href="#" id="logoutLink">Log out</a></li>
+        </ul>
       </div>
     </div>
   </header>
@@ -128,7 +137,7 @@
               <select class="form-select custom-input" id="categories">
               </select>
             </div>
-            
+
             <div class="mb-3">
               <label for="mood" class="form-label">Mood</label>
               <div class="input-group">
@@ -181,6 +190,46 @@
       </div>
     </div>
   </div>
+
+  <script>
+    const currentUser = JSON.parse(localStorage.getItem('currentUser')) || {};
+
+    const headerAvatar = document.getElementById('headerAvatar');
+    const dropdownAvatar = document.getElementById('dropdownAvatar');
+    const dropdownName = document.getElementById('dropdownName');
+    const dropdownEmail = document.getElementById('dropdownEmail');
+
+    if (currentUser.avatar) {
+      headerAvatar.src = currentUser.avatar;
+      dropdownAvatar.src = currentUser.avatar;
+    }
+    dropdownName.textContent = `${currentUser.firstName || ''} ${currentUser.lastName || ''}`.trim();
+    dropdownEmail.textContent = currentUser.email || '';
+
+    const logoutLink = document.getElementById('logoutLink');
+    const logoutModalEl = document.getElementById('logoutModal');
+    const confirmLogout = document.getElementById('confirmLogoutBtn');
+    if (logoutModalEl) {
+      const bsLogoutModal = bootstrap.Modal.getOrCreateInstance(logoutModalEl);
+      logoutLink.addEventListener('click', e => {
+        e.preventDefault();
+        bsLogoutModal.show();
+      });
+      confirmLogout.addEventListener('click', () => {
+        localStorage.removeItem('currentUser');
+        bsLogoutModal.hide();
+        location.reload();
+      });
+    } else {
+      logoutLink.addEventListener('click', e => {
+        e.preventDefault();
+        if (confirm('Are you sure you want to log out?')) {
+          localStorage.removeItem('currentUser');
+          location.reload();
+        }
+      });
+    }
+  </script>
   <script src="../js/article_manager.js"></script>
 </body>
 

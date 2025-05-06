@@ -34,7 +34,8 @@ document.addEventListener('DOMContentLoaded', function () {
         toast.show()
       }
       else {
-        window.location.href = "../pages/entries_manager.html"
+        localStorage.setItem('currentUser', JSON.stringify(user));
+        window.location.href = "../pages/dashboard.html"
       }
     }
   })
