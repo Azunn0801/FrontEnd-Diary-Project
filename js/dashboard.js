@@ -1,22 +1,7 @@
-document.addEventListener('DOMContentLoaded', function () {
-    document.getElementById('logoLink').addEventListener('click', () => {
-        window.location.href = './index.html';
-    });
-    const searchBox = document.getElementById('headerSearch');
-    const searchBtn = document.getElementById('searchBtn');
-    searchBtn.addEventListener('click', () => {
-        const q = searchBox.value.trim();
-        if (q) window.location.href = `../pages/search_results.html?q=${encodeURIComponent(q)}`;
-    });
-    document.getElementById('logoutLink').addEventListener('click', e => {
-        e.preventDefault();
-        localStorage.removeItem('currentUser');
-        window.location.href = '../pages/login.html';
-    });
-
+document.addEventListener('DOMContentLoaded', () => {
     const stored = localStorage.getItem('currentUser');
     if (!stored) {
-        window.location.href = '../pages/login.html';
+        window.location.href = 'login.html';
         return;
     }
     const user = JSON.parse(stored);
@@ -30,10 +15,12 @@ document.addEventListener('DOMContentLoaded', function () {
     const warningElem = document.getElementById('usernameWarning');
     const form = document.getElementById('dashboardForm');
 
-    nameDisplay.value = user.firstName + ' ' + user.lastName;
-    usernameInput.value = user.username;
-    emailDisplay.value = user.email;
-    if (user.avatar) avatarPreview.src = user.avatar;
+    nameDisplay.value = `${user.firstName || ''} ${user.lastName || ''}`.trim();
+    usernameInput.value = user.username || '';
+    emailDisplay.value = user.email || '';
+    if (user.avatar) {
+        avatarPreview.src = user.avatar;
+    }
 
     avatarInput.addEventListener('change', e => {
         const file = e.target.files[0];
@@ -45,30 +32,42 @@ document.addEventListener('DOMContentLoaded', function () {
 
     form.addEventListener('submit', e => {
         e.preventDefault();
-        warningElem.textContent = ''
-        const newUsername = usernameInput.value.trim()
+        warningElem.textContent = '';
+
+        const newUsername = usernameInput.value.trim();
         if (!newUsername) {
-            warningElem.textContent = 'Tên đăng nhập không được để trống.'
-            return
+            warningElem.textContent = 'Tên đăng nhập không được để trống.';
+            return;
         }
-        let users = JSON.parse(localStorage.getItem('users')) || []
-        const duplicate = users.some(u => u.username === newUsername && u.username !== user.username)
-        if (duplicate) {
-            warningElem.textContent = 'Tên đăng nhập đã tồn tại.'
-            return
+
+        const users = JSON.parse(localStorage.getItem('users') || '[]');
+        const oldUsername = user.username;
+        if (newUsername !== oldUsername && users.some(u => u.username === newUsername)) {
+            warningElem.textContent = 'Tên đăng nhập đã tồn tại.';
+            return;
         }
-        const oldUsername = user.username
-        user.username = newUsername
-        if (avatarInput.files[0]) user.avatar = avatarPreview.src
-        const newPwd = passwordInput.value.trim()
-        if (newPwd.length >= 6) user.password = newPwd
 
-        localStorage.setItem('currentUser', JSON.stringify(user))
-        const idx = users.findIndex(u => u.username === oldUsername)
-        if (idx > -1) users[idx] = user
-        localStorage.setItem('users', JSON.stringify(users))
+        user.username = newUsername;
+        if (avatarInput.files[0]) {
+            user.avatar = avatarPreview.src;
+        }
+        const newPwd = passwordInput.value.trim();
+        if (newPwd) {
+            if (newPwd.length < 6) {
+                warningElem.textContent = 'Mật khẩu mới phải có ít nhất 6 ký tự.';
+                return;
+            }
+            user.password = newPwd;
+        }
 
-        alert('Cập nhật thành công!')
-        passwordInput.value = ''
+        localStorage.setItem('currentUser', JSON.stringify(user));
+        const idx = users.findIndex(u => u.username === oldUsername);
+        if (idx > -1) {
+            users[idx] = user;
+            localStorage.setItem('users', JSON.stringify(users));
+        }
+
+        alert('Cập nhật thành công!');
+        passwordInput.value = '';
     });
 });

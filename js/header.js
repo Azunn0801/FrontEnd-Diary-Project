@@ -1,35 +1,59 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const getPagePath = page => window.location.pathname.includes('/pages/') ? page : `pages/${page}`;
+
+    const userMenu = document.querySelector('.nav-item.dropdown');
+    const authButtons = document.querySelector('.auth-buttons');
+    const dropdownName = document.getElementById('dropdownName');
+    const dropdownEmail = document.getElementById('dropdownEmail');
+    const headerAvatar = document.getElementById('headerAvatar');
+    const dropdownAvatar = document.getElementById('dropdownAvatar');
+
     const user = JSON.parse(localStorage.getItem('currentUser') || '{}');
     if (user.firstName) {
-        const fullName = `${user.firstName} ${user.lastName}`.trim();
-        document.getElementById('dropdownName').textContent = fullName;
-        document.getElementById('dropdownEmail').textContent = user.email || '';
+        dropdownName.textContent = `${user.firstName} ${user.lastName || ''}`.trim();
+        dropdownEmail.textContent = user.email || '';
         if (user.avatar) {
-            document.getElementById('headerAvatar').src = user.avatar;
-            document.getElementById('dropdownAvatar').src = user.avatar;
+            headerAvatar.src = user.avatar;
+            dropdownAvatar.src = user.avatar;
         }
+        if (userMenu) userMenu.style.display = '';
+        if (authButtons) authButtons.style.display = 'none';
+    } else {
+        if (userMenu) userMenu.style.display = 'none';
+        if (authButtons) authButtons.style.display = '';
     }
+
+    document.getElementById('profileLink')?.addEventListener('click', e => {
+        e.preventDefault();
+        window.location.href = getPagePath('dashboard.html');
+    });
+    document.getElementById('avatarLink')?.addEventListener('click', e => {
+        e.preventDefault();
+        window.location.href = getPagePath('dashboard.html#avatarInput');
+    });
+    document.getElementById('passwordLink')?.addEventListener('click', e => {
+        e.preventDefault();
+        window.location.href = getPagePath('dashboard.html#passwordInput');
+    });
 
     const searchInput = document.getElementById('headerSearch');
-    if (searchInput) {
-        const doSearch = () => {
-            const q = searchInput.value.trim();
-            if (q) window.location.href = `./pages/search_results.html?q=${encodeURIComponent(q)}`;
-        };
-        document.getElementById('searchBtn')?.addEventListener('click', e => {
-            e.preventDefault(); doSearch();
-        });
-        searchInput.addEventListener('keypress', e => {
-            if (e.key === 'Enter') { e.preventDefault(); doSearch(); }
-        });
-    }
+    const searchBtn = document.getElementById('searchBtn');
+    const doSearch = () => {
+        const q = searchInput.value.trim();
+        if (!q) return;
+        window.location.href = `${getPagePath('search_results.html')}?q=${encodeURIComponent(q)}`;
+    };
+    searchBtn?.addEventListener('click', e => { e.preventDefault(); doSearch(); });
+    searchInput?.addEventListener('keypress', e => {
+        if (e.key === 'Enter') { e.preventDefault(); doSearch(); }
+    });
 
-    const logoutButtons = document.querySelectorAll('#logoutToggle');
+    const logoutToggles = document.querySelectorAll('.logoutToggle, #logoutToggle');
     const logoutModalEl = document.getElementById('confirmLogoutModal');
     const confirmBtn = document.getElementById('btnConfirmLogout');
     const bsModal = logoutModalEl && bootstrap.Modal.getOrCreateInstance(logoutModalEl);
 
-    logoutButtons.forEach(btn => {
+    logoutToggles.forEach(btn => {
         btn.addEventListener('click', e => {
             e.preventDefault();
             bsModal.show();
@@ -38,8 +62,6 @@ document.addEventListener('DOMContentLoaded', () => {
     confirmBtn?.addEventListener('click', () => {
         localStorage.removeItem('currentUser');
         bsModal.hide();
-        const path = window.location.pathname;
-        if (path.includes('/pages/')) window.location.href = '../index.html';
-        else window.location.href = 'index.html';
+        window.location.href = getPagePath('../index.html');
     });
 });

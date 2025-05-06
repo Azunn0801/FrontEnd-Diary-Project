@@ -2,40 +2,42 @@ let users = JSON.parse(localStorage.getItem("users")) || [];
 
 const posts = JSON.parse(localStorage.getItem('articles')) || [];
 const categories = JSON.parse(localStorage.getItem('categories')) || [
-  "Nấu ăn","IT","Work & Career",
-  "Emotion & Feeling","Personal Thoughts","Daily Journal"
+  "Nấu ăn", "IT", "Work & Career",
+  "Emotion & Feeling", "Personal Thoughts", "Daily Journal"
 ];
 
 const postsPerPage = 4;
-let currentPage     = 1;
+let currentPage = 1;
 let currentCategory = 'All';
-let searchVal       = '';
+let searchVal = '';
 
 document.addEventListener('DOMContentLoaded', () => {
-  const recentRow     = document.querySelector('.recent-posts .row');
-  const allRow        = document.querySelector('.all-posts .row');
-  const paginationUl  = document.querySelector('.pagination');
-  const catContainer  = document.querySelector('h2.mb-4 small');
-  const searchInput   = document.getElementById('headerSearch');
-  const searchBtn     = document.getElementById('searchBtn');
+  const recentRow = document.querySelector('.recent-posts .row');
+  const allRow = document.querySelector('.all-posts .row');
+  const paginationUl = document.querySelector('.pagination');
+  const catContainer = document.querySelector('h2.mb-4 small');
+  const searchInput = document.getElementById('headerSearch');
+  const searchBtn = document.getElementById('searchBtn');
+  const recentSection = document.querySelector('.recent-posts');
+
 
   catContainer.innerHTML = '';
   const makeLink = (text, cat) => {
     const a = document.createElement('a');
     a.href = '#';
     a.textContent = text;
-    a.dataset.cat   = cat;
-    a.className     = 'me-2 text-body text-decoration-none' + (cat === currentCategory ? ' active' : '');
+    a.dataset.cat = cat;
+    a.className = 'me-2 text-body text-decoration-none' + (cat === currentCategory ? ' active' : '');
     return a;
   };
-  catContainer.appendChild(makeLink('All blog posts','All'));
+  catContainer.appendChild(makeLink('All blog posts', 'All'));
   categories.forEach(cat => catContainer.appendChild(makeLink(cat, cat)));
 
   catContainer.addEventListener('click', e => {
     if (e.target.tagName === 'A') {
       e.preventDefault();
       currentCategory = e.target.dataset.cat;
-      currentPage     = 1;
+      currentPage = 1;
       catContainer.querySelectorAll('a').forEach(a => a.classList.remove('active'));
       e.target.classList.add('active');
       renderAllPosts();
@@ -44,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   recentRow.innerHTML = '';
-  posts.slice(0,2).forEach(post => {
+  posts.slice(0, 2).forEach(post => {
     const col = document.createElement('div');
     col.className = 'col-md-6 mb-4';
     col.innerHTML = renderCard(post);
@@ -52,8 +54,13 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   const doSearch = () => {
-    searchVal   = searchInput.value.trim().toLowerCase();
+    searchVal = searchInput.value.trim().toLowerCase();
     currentPage = 1;
+    if (searchVal) {
+      recentSection.style.display = 'none';
+    } else {
+      recentSection.style.display = 'block';
+    }
     renderAllPosts();
     renderPagination();
   };
@@ -69,8 +76,9 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   searchInput.addEventListener('input', () => {
     if (searchInput.value.trim() === '') {
-      searchVal   = '';
+      searchVal = '';
       currentPage = 1;
+      recentSection.style.display = 'block';
       renderAllPosts();
       renderPagination();
     }
@@ -179,9 +187,8 @@ function renderCard(post) {
         <p class="card-text flex-grow-1">${post.content}</p>
         <div class="mt-3 d-flex justify-content-between align-items-center">
           <a href="#" class="btn btn-primary read-more">Read more</a>
-          <span class="badge bg-${
-            post.category === 'Nấu ăn' ? 'success' : 'secondary'
-          }">${post.category}</span>
+          <span class="badge bg-${post.category === 'Nấu ăn' ? 'success' : 'secondary'
+    }">${post.category}</span>
         </div>
       </div>
     </div>`;
