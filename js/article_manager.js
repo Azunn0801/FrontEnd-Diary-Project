@@ -103,7 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const sel = document.createElement('select');
             sel.className = 'form-select status-select';
             sel.dataset.index = idx;
-            ['Public', 'Private'].forEach(s => {
+            ['Public', 'Private'].filter(s => {
                 const op = document.createElement('option');
                 op.value = s;
                 op.textContent = s;
@@ -210,7 +210,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const statusRadio = document.querySelector('input[name="status"]:checked');
         const status = statusRadio ? statusRadio.value.charAt(0).toUpperCase() + statusRadio.value.slice(1) : 'Public';
         if (!title || !content) { alert('Vui lòng nhập tiêu đề và nội dung'); return; }
-        const data = { title, category, content, status, image: '' };
+        const data = {
+    id: articles.length ? Math.max(...articles.map(a => a.id || 0)) + 1 : 1,
+    title,
+    category,
+    content,
+    status,
+    image: '',
+    date: getFormattedDate()
+};
         if (fileInput.files[0]) {
             const reader = new FileReader();
             reader.onload = ev => { data.image = ev.target.result; finishSave(data); };

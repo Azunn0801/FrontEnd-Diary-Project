@@ -21,17 +21,32 @@
                 <a href="https://x.com/"><img src="../assets/icons/twitter-brands.svg" alt=""></a>
             </div>
             <p class="or"><b>Or</b></p>
-            <form novalidate>
+            <form onsubmit="login(event)">
                 <div class="mb-3">
-                    <input type="email" class="form-control" id="email" placeholder="Enter a valid email address" required>
+                                  <input type="email" class="form-control" id="email" placeholder="Enter a valid email address" required>
                     <label for="email" class="form-label">Email address</label>
                 </div>
                 <div class="mb-3">
-                    <input type="password" class="form-control" id="password" placeholder="Enter password" required>
+                            <input type="password" class="form-control" id="password" placeholder="Enter password" required>
                     <label for="password" class="form-label">Password</label>
                 </div>
-                <button type="submit" class="btn btn-primary">Login</button>
+                  <button type="submit" class="btn btn-primary">Login</button>
             </form>
+
+            <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+                 <div class="modal-dialog">
+                           <div class="modal-content">
+                                       <div class="modal-header">
+                            <h5 class="modal-title" id="errorModalLabel">Lỗi</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body" id="errorMessage"></div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <!-- <input type="email" id="email" placeholder="Enter a valid email address" required>
             <label for="">Email address</label>
             <input type="password" id="password" placeholder="Enter password" required>

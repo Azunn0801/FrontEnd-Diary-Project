@@ -1,5 +1,25 @@
 document.addEventListener('DOMContentLoaded', function () {
-    let allUsers = JSON.parse(localStorage.getItem('users')) || [];
+    let allUsers = [];
+    try {
+        const storedUsers = localStorage.getItem('users');
+        if (storedUsers) {
+            const parsedUsers = JSON.parse(storedUsers);
+            allUsers = Array.isArray(parsedUsers) ? parsedUsers : [];
+            // Thêm kiểm tra và giá trị mặc định
+            allUsers = allUsers.map(user => ({
+                ...user,
+                firstName: user.firstName || 'Unknown',
+                lastName: user.lastName || '',
+                status: user.status || 'Active',
+                username: user.username || (user.email ? user.email.split('@')[0] : 'unknown')
+            }));
+        } else {
+            console.warn('Không tìm thấy dữ liệu users trong localStorage');
+        }
+    } catch (e) {
+        console.error('Lỗi phân tích dữ liệu users từ localStorage:', e);
+        allUsers = [];
+    }
     let shownUsers = [...allUsers];
     const usersPerPage = 5;
     let currentPage = 1;
@@ -43,7 +63,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function getValue(user) {
         if (sortField === 'name') return (user.firstName + ' ' + user.lastName).toLowerCase();
-        return user[sortField].toLowerCase();
+        return user[sortField]?.toLowerCase() || '';
     }
 
     function updateSortIcons() {
@@ -72,8 +92,8 @@ document.addEventListener('DOMContentLoaded', function () {
         pageItems.forEach(user => {
             const row = document.createElement('tr');
             const nameCell = makeNameCell(user);
-            const statusCell = document.createElement('td'); statusCell.textContent = user.status;
-            const emailCell = document.createElement('td'); emailCell.textContent = user.email;
+            const statusCell = document.createElement('td'); statusCell.textContent = user.status || 'Active';
+            const emailCell = document.createElement('td'); emailCell.textContent = user.email || '';
             const actionCell = makeActionCell(user);
             row.append(nameCell, statusCell, emailCell, actionCell);
             tableBody.appendChild(row);
@@ -82,11 +102,13 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function makeNameCell(user) {
-        const initials = (user.firstName[0] + user.lastName[0]).toUpperCase();
+        const firstName = user.firstName || 'Unknown';
+        const lastName = user.lastName || '';
+        const initials = (firstName[0] + (lastName[0] || '')).toUpperCase();
         let avatar;
         if (user.avatar) {
             avatar = document.createElement('img');
-            avatar.src = `../assets/images/${user.avatar}`;
+            avatar.src = user.avatar; // Sử dụng đường dẫn avatar từ dữ liệu
             avatar.width = 40; avatar.height = 40;
             avatar.className = 'rounded-circle';
             avatar.onerror = () => {
@@ -110,8 +132,8 @@ document.addEventListener('DOMContentLoaded', function () {
         const wrapper = document.createElement('div'); wrapper.className = 'd-flex align-items-center';
         wrapper.appendChild(avatar);
         const info = document.createElement('div'); info.className = 'ms-2';
-        const fullName = document.createElement('div'); fullName.textContent = `${user.firstName} ${user.lastName}`;
-        const userTag = document.createElement('span'); userTag.className = 'text-muted ms-2'; userTag.textContent = `@${user.username}`;
+        const fullName = document.createElement('div'); fullName.textContent = `${firstName} ${lastName}`.trim();
+        const userTag = document.createElement('span'); userTag.className = 'text-muted ms-2'; userTag.textContent = `@${user.username || (user.email ? user.email.split('@')[0] : 'unknown')}`;
         info.append(fullName, userTag);
         wrapper.appendChild(info);
         cell.appendChild(wrapper);
@@ -121,17 +143,17 @@ document.addEventListener('DOMContentLoaded', function () {
     function makeActionCell(user) {
         const cell = document.createElement('td');
         const btn = document.createElement('button');
-        btn.className = `btn btn-sm btn-purple ${user.status === 'Hoạt động' ? 'block-btn' : 'unblock-btn'}`;
-        btn.textContent = user.status === 'Hoạt động' ? 'Block' : 'Unblock';
+        btn.className = `btn btn-sm btn-purple ${user.status === 'Active' ? 'block-btn' : 'unblock-btn'}`;
+        btn.textContent = user.status === 'Active' ? 'Block' : 'Unblock';
         btn.addEventListener('click', () => toggleStatus(user));
         cell.appendChild(btn);
         return cell;
     }
 
     function toggleStatus(user) {
-        const confirmMsg = user.status === 'Hoạt động' ? 'Khóa người dùng?' : 'Mở khóa người dùng?';
+        const confirmMsg = user.status === 'Active' ? 'Block user?' : 'Unblock user?';
         if (!confirm(confirmMsg)) return;
-        user.status = user.status === 'Hoạt động' ? 'Bị khóa' : 'Hoạt động';
+        user.status = user.status === 'Active' ? 'Blocked' : 'Active';
         localStorage.setItem('users', JSON.stringify(allUsers));
         shownUsers = [...allUsers];
         renderPage();
@@ -141,7 +163,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function renderPager() {
         const totalPages = Math.ceil(shownUsers.length / usersPerPage);
         const makeItem = (label, disabled, onClick) => {
-            const li = document.createElement('li'); li.className = `page-item${disabled?' disabled':''}`;
+            const li = document.createElement('li'); li.className = `page-item${disabled ? ' disabled' : ''}`;
             const a = document.createElement('a'); a.className = 'page-link'; a.href = '#'; a.textContent = label;
             if (!disabled) a.onclick = e => { e.preventDefault(); onClick(); };
             li.appendChild(a); return li;

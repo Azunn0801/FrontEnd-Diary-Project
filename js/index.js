@@ -1,17 +1,52 @@
 let users = JSON.parse(localStorage.getItem("users")) || [];
 
-const posts = JSON.parse(localStorage.getItem('articles')) || [];
-const categories = JSON.parse(localStorage.getItem('categories')) || [
-  "Nấu ăn", "IT", "Work & Career",
-  "Emotion & Feeling", "Personal Thoughts", "Daily Journal"
-];
+let posts = [];
+let categories = [];
+
+async function loadArticles() {
+  const local = localStorage.getItem("articles");
+  if (local) {
+    posts = JSON.parse(local);
+  } else {
+    try {
+      const res = await fetch("../database/articles.json");
+      if (!res.ok) throw new Error("Failed to fetch articles");
+      posts = await res.json();
+      localStorage.setItem("articles", JSON.stringify(posts));
+    } catch (e) {
+      console.error("Error fetching articles:", e);
+      posts = [];
+    }
+  }
+}
+
+async function loadCategories() {
+  const local = localStorage.getItem("categories");
+  if (local) {
+    categories = JSON.parse(local);
+  } else {
+    try {
+      const res = await fetch("../database/entries.json");
+      if (!res.ok) throw new Error("Failed to fetch categories");
+      const data = await res.json();
+      categories = data.map(entry => entry.name);
+      localStorage.setItem("categories", JSON.stringify(categories));
+    } catch (e) {
+      console.error("Lỗi khi fetch categories:", e);
+      categories = [];
+    }
+  }
+}
 
 const postsPerPage = 4;
 let currentPage = 1;
 let currentCategory = 'All';
 let searchVal = '';
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+  await loadArticles();
+  await loadCategories();
+
   const recentRow = document.querySelector('.recent-posts .row');
   const allRow = document.querySelector('.all-posts .row');
   const paginationUl = document.querySelector('.pagination');
@@ -19,7 +54,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const searchInput = document.getElementById('headerSearch');
   const searchBtn = document.getElementById('searchBtn');
   const recentSection = document.querySelector('.recent-posts');
-
 
   catContainer.innerHTML = '';
   const makeLink = (text, cat) => {
@@ -46,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   recentRow.innerHTML = '';
-  posts.slice(0, 2).forEach(post => {
+  posts.slice(0, 2).forEach((post) => {
     const col = document.createElement('div');
     col.className = 'col-md-6 mb-4';
     col.innerHTML = renderCard(post);
@@ -56,23 +90,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const doSearch = () => {
     searchVal = searchInput.value.trim().toLowerCase();
     currentPage = 1;
-    if (searchVal) {
-      recentSection.style.display = 'none';
-    } else {
-      recentSection.style.display = 'block';
-    }
+    recentSection.style.display = searchVal ? 'none' : 'block';
     renderAllPosts();
     renderPagination();
   };
-  searchBtn.addEventListener('click', e => {
-    e.preventDefault();
-    doSearch();
-  });
+  searchBtn.addEventListener('click', e => { e.preventDefault(); doSearch(); });
   searchInput.addEventListener('keypress', e => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      doSearch();
-    }
+    if (e.key === 'Enter') { e.preventDefault(); doSearch(); }
   });
   searchInput.addEventListener('input', () => {
     if (searchInput.value.trim() === '') {
@@ -89,14 +113,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.body.addEventListener('click', e => {
     if (e.target.classList.contains('read-more')) {
-      window.location.href = './pages/article_details.html';
+      const id = e.target.dataset.id;
+      if (id) {
+        localStorage.setItem('selectedArticleId', id);
+        window.location.href = './pages/article_details.html';
+      }
     }
   });
 });
 
 function getFilteredPosts() {
   let filtered = posts;
-
   if (currentCategory !== 'All') {
     filtered = filtered.filter(p => p.category === currentCategory);
   }
@@ -127,7 +154,7 @@ function renderAllPosts() {
 
   const start = (currentPage - 1) * postsPerPage;
   const pageItems = filtered.slice(start, start + postsPerPage);
-  pageItems.forEach(post => {
+  pageItems.forEach((post) => {
     const col = document.createElement('div');
     col.className = 'col-md-6 mb-4';
     col.innerHTML = renderCard(post);
@@ -161,17 +188,11 @@ function renderPagination() {
     return li;
   };
 
-  paginationUl.appendChild(
-    makeBtn('Previous', currentPage === 1, () => { currentPage--; })
-  );
+  paginationUl.appendChild(makeBtn('Previous', currentPage === 1, () => { currentPage--; }));
   for (let i = 1; i <= totalPages; i++) {
-    paginationUl.appendChild(
-      makeBtn(i, false, () => { currentPage = i; })
-    );
+    paginationUl.appendChild(makeBtn(i, false, () => { currentPage = i; }));
   }
-  paginationUl.appendChild(
-    makeBtn('Next', currentPage === totalPages, () => { currentPage++; })
-  );
+  paginationUl.appendChild(makeBtn('Next', currentPage === totalPages, () => { currentPage++; }));
 }
 
 function renderCard(post) {
@@ -186,9 +207,14 @@ function renderCard(post) {
         <h5 class="card-title mb-2">${post.title}</h5>
         <p class="card-text flex-grow-1">${post.content}</p>
         <div class="mt-3 d-flex justify-content-between align-items-center">
-          <a href="#" class="btn btn-primary read-more">Read more</a>
-          <span class="badge bg-${post.category === 'Nấu ăn' ? 'success' : 'secondary'
-    }">${post.category}</span>
+          <a href="#" 
+             class="btn btn-primary read-more" 
+             data-id="${post.id}">
+            Read more
+          </a>
+          <span class="badge bg-${post.category === 'Nấu ăn' ? 'success' : 'secondary'}">
+            ${post.category}
+          </span>
         </div>
       </div>
     </div>`;

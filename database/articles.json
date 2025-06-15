@@ -1,0 +1,37 @@
+[
+    {
+        "id": 1,
+        "title": "Phỏng vấn thành công vị trí trưởng nhóm dự án",
+        "category": "Nấu ăn",
+        "content": "Cảm giác tự tin sau buổi phỏng vấn tại công ty ABC và sẵn sàng cho thử thách mới.",
+        "status": "Public",
+        "image": "/assets/images/interview.jpg"
+    },
+    {
+        "id": 2,
+        "title": "Khoảnh khắc bình yên giữa bộn bề",
+        "category": "Emotion & Feeling",
+        "content": "Khi ngồi nhâm nhi tách cà phê, tôi cảm nhận được sự bình yên lan tỏa khắp tâm hồn.",
+        "image": "/assets/images/peace.jpg",
+        "status": "Private",
+        "date": "2025-05-05"
+    },
+    {
+        "id": 3,
+        "title": "Những suy nghĩ về hành trình tự học",
+        "category": "Personal Thoughts",
+        "content": "Tự học không chỉ là tiếp thu kiến thức, mà còn là hành trình khám phá bản thân và vượt qua giới hạn.",
+        "image": "/assets/images/learn.jpg",
+        "status": "Public",
+        "date": "2025-05-05"
+    },
+    {
+        "id": 4,
+        "title": "Nhật ký 05/05/2025",
+        "category": "Daily Journal",
+        "content": "Sáng tham gia workshop, trưa họp nhóm, chiều chỉnh sửa bài giảng, tối đọc sách và ghi chép lại những ý tưởng mới.",
+        "image": "../assets/images/diary.jpg",
+        "status": "Public",
+        "date": "2025-05-05"
+    }
+]

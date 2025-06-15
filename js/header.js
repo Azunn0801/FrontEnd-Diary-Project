@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const getPagePath = page => window.location.pathname.includes('/pages/') ? page : `pages/${page}`;
+    const getPagePath = page => `/${page}`;
 
     const userMenu = document.querySelector('.nav-item.dropdown');
     const authButtons = document.querySelector('.auth-buttons');
@@ -25,15 +25,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('profileLink')?.addEventListener('click', e => {
         e.preventDefault();
-        window.location.href = getPagePath('dashboard.html');
+        window.location.href = getPagePath('/pages/dashboard.html');
     });
     document.getElementById('avatarLink')?.addEventListener('click', e => {
         e.preventDefault();
-        window.location.href = getPagePath('dashboard.html#avatarInput');
+        window.location.href = '/pages/dashboard.html#avatarInput';
     });
     document.getElementById('passwordLink')?.addEventListener('click', e => {
         e.preventDefault();
-        window.location.href = getPagePath('dashboard.html#passwordInput');
+        window.location.href = '/pages/dashboard.html#passwordInput';
     });
 
     const searchInput = document.getElementById('headerSearch');
@@ -62,6 +62,6 @@ document.addEventListener('DOMContentLoaded', () => {
     confirmBtn?.addEventListener('click', () => {
         localStorage.removeItem('currentUser');
         bsModal.hide();
-        window.location.href = getPagePath('../index.html');
+        window.location.href = getPagePath('/index.html');
     });
 });

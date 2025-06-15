@@ -1,0 +1,102 @@
+[
+    {
+        "id": 1,
+        "firstName": "Olivia",
+        "lastName": "Rhye",
+        "email": "olivia@untitledui.com",
+        "password": "password123",
+        "avatar": "../assets/images/Olivia.png",
+        "status": "Active",
+        "username": "olivia"
+    },
+    {
+        "id": 2,
+        "firstName": "Phoenix",
+        "lastName": "Baker",
+        "email": "phoenix@untitledui.com",
+        "password": "password123",
+        "avatar": "../assets/images/Phoenix.png",
+        "status": "Active",
+        "username": "phoenix"
+    },
+    {
+        "id": 3,
+        "firstName": "Lana",
+        "lastName": "Steiner",
+        "email": "lana@untitledui.com",
+        "password": "password123",
+        "avatar": "../assets/images/Lana.png",
+        "status": "Active",
+        "username": "lana"
+    },
+    {
+        "id": 4,
+        "firstName": "Demi",
+        "lastName": "Wilkinson",
+        "email": "demi@untitledui.com",
+        "password": "password123",
+        "avatar": "../assets/images/Demi.png",
+        "status": "Active",
+        "username": "demi"
+    },
+    {
+        "id": 5,
+        "firstName": "Candice",
+        "lastName": "Wu",
+        "email": "candice@untitledui.com",
+        "password": "password123",
+        "avatar": "../assets/images/Candice.png",
+        "status": "Active",
+        "username": "candice"
+    },
+    {
+        "id": 6,
+        "firstName": "Natali",
+        "lastName": "Craig",
+        "email": "natali@untitledui.com",
+        "password": "password123",
+        "avatar": "../assets/images/Natali.png",
+        "status": "Active",
+        "username": "natali"
+    },
+    {
+        "id": 7,
+        "firstName": "Drew",
+        "lastName": "Cano",
+        "email": "drew@untitledui.com",
+        "password": "password123",
+        "avatar": "../assets/images/Drew.png",
+        "status": "Active",
+        "username": "drew"
+    },
+    {
+        "id": 8,
+        "firstName": "Orlando",
+        "lastName": "Diggs",
+        "email": "orlando@untitledui.com",
+        "password": "password123",
+        "avatar": "../assets/images/Orlando.png",
+        "status": "Active",
+        "username": "orlando"
+    },
+    {
+        "id": 9,
+        "firstName": "Andi",
+        "lastName": "Lane",
+        "email": "andi@untitledui.com",
+        "password": "password123",
+        "avatar": "../assets/images/Andi.png",
+        "status": "Active",
+        "username": "andi"
+    },
+    {
+        "id": 10,
+        "firstName": "Kate",
+        "lastName": "Morrison",
+        "email": "kate@untitledui.com",
+        "password": "password123",
+        "avatar": "../assets/images/Kate.png",
+        "status": "Active",
+        "username": "kate"
+    }
+]

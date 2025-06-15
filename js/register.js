@@ -1,27 +1,33 @@
-console.log("register.js loaded ✅");
-
+console.log("register.js loaded");
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-const initUsers = [
-  { id: 1, firstname: "Lê", lastname: "Minh Thu", email: "minhthu@gmail.com", password: "123456" },
-  { id: 2, firstname: "Vũ", lastname: "Hồng Vân", email: "hongvan@yahoo.com", password: "abc123" }
-];
-
 let users = JSON.parse(localStorage.getItem("users"));
 if (!users) {
-  users = initUsers;
-  localStorage.setItem("users", JSON.stringify(users));
+  fetch('../database/users.json')
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Cannot load User Data');
+      }
+      return response.json();
+    })
+    .then(data => {
+      users = Array.isArray(data) ? data : [];
+      localStorage.setItem('users', JSON.stringify(users));
+    })
+    .catch(error => {
+      toastElement.querySelector('.toast-body').innerHTML = 'Error loading user data: ' + error.message;
+      toast.show();
+    });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  const form         = document.querySelector('form');
+  const form = document.querySelector('form');
   const toastElement = document.getElementById('validationToast');
-  const toast        = new bootstrap.Toast(toastElement);
+  const toast = new bootstrap.Toast(toastElement);
 
-  const firstNameInput  = document.getElementById('first-name');
-  const lastNameInput   = document.getElementById('last-name');
-  const emailInput      = document.getElementById('email');
-  const passwordInput   = document.getElementById('password');
+  const firstNameInput = document.getElementById('first-name');
+  const lastNameInput = document.getElementById('last-name');
+  const emailInput = document.getElementById('email');
+  const passwordInput = document.getElementById('password');
   const confirmPwdInput = document.getElementById('confirm-password');
 
   form.addEventListener('submit', (event) => {
@@ -29,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let errors = [];
 
     if (!firstNameInput.value.trim()) errors.push("First name is required");
-    if (!lastNameInput.value.trim())  errors.push("Last name is required");
+    if (!lastNameInput.value.trim()) errors.push("Last name is required");
 
     const emailVal = emailInput.value.trim();
     if (!emailVal) {
@@ -58,20 +64,21 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     console.log({
-      first:   firstNameInput.value,
-      last:    lastNameInput.value,
-      mail:    emailVal,
-      pass:    pwd,
+      first: firstNameInput.value,
+      last: lastNameInput.value,
+      mail: emailVal,
+      pass: pwd,
       confirm: confirmPwdInput.value
     });
 
     const user = {
       id: users.length + 1,
-      firstname: firstNameInput.value.trim(),
-      lastname:  lastNameInput.value.trim(),
-      email:     emailVal,
-      status: "Hoạt động",
-      password:  pwd
+      firstName: firstNameInput.value.trim(),
+      lastName: lastNameInput.value.trim(),
+      email: emailVal,
+      status: "Active",
+      password: pwd,
+      avatar: '../assets/images/user.png'
     };
     console.log("Thêm user:", user);
 

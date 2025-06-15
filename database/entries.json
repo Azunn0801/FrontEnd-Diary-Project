@@ -1,0 +1,18 @@
+[
+    {
+        "id": 1,
+        "name": "Work & Career"
+    },
+    {
+        "id": 2,
+        "name": "Emotion & Feeling"
+    },
+    {
+        "id": 3,
+        "name": "Personal Thoughts"
+    },
+    {
+        "id": 4,
+        "name": "Daily Journal"
+    }
+]

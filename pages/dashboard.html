@@ -37,13 +37,13 @@
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li><a class="dropdown-item" href="dashboard.html">Xem hồ sơ</a></li>
-                        <li><a class="dropdown-item" href="dashboard.html#avatarInput">Cập nhật ảnh đại diện</a></li>
-                        <li><a class="dropdown-item" href="dashboard.html#passwordInput">Đổi mật khẩu</a></li>
+                        <li><a class="dropdown-item" href="dashboard.html">View profile</a></li>
+                        <li><a class="dropdown-item" href="dashboard.html#avatarInput">Update avatar</a></li>
+                        <li><a class="dropdown-item" href="dashboard.html#passwordInput">Change password</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li><a class="dropdown-item" href="#" id="logoutToggle">Đăng xuất</a></li>
+                        <li><a class="dropdown-item" href="#" id="logoutToggle">Log out</a></li>
                     </ul>
                 </li>
             </ul>
@@ -51,15 +51,15 @@
     </header>
 
     <div class="container py-5">
-        <h2 class="mb-4 text-center">Thông tin Tài khoản</h2>
+        <h2 class="mb-4 text-center">Account Information</h2>
         <div class="form-section">
             <form id="dashboardForm">
                 <div class="mb-3">
-                    <label for="nameDisplay" class="form-label">Họ và tên</label>
+                    <label for="nameDisplay" class="form-label">Full Name</label>
                     <input type="text" id="nameDisplay" class="form-control-plaintext" readonly>
                 </div>
                 <div class="mb-3">
-                    <label for="usernameInput" class="form-label">Tên đăng nhập</label>
+                    <label for="usernameInput" class="form-label">Username</label>
                     <input type="text" id="usernameInput" class="form-control">
                     <p id="usernameWarning" class="text-danger"></p>
                 </div>
@@ -76,10 +76,10 @@
                     <input type="file" id="avatarInput" accept="image/*" class="form-control">
                 </div>
                 <div class="mb-4">
-                    <label for="passwordInput" class="form-label">Mật khẩu mới</label>
-                    <input type="password" id="passwordInput" class="form-control" placeholder="Tối thiểu 6 ký tự">
+                    <label for="passwordInput" class="form-label">New Password</label>
+                    <input type="password" id="passwordInput" class="form-control" placeholder="Minimum 6 characters">
                 </div>
-                <button type="submit" class="btn btn-primary w-100">Lưu thay đổi</button>
+                <button type="submit" class="btn btn-primary w-100">Save Changes</button>
             </form>
         </div>
     </div>
